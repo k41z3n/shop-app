@@ -8,28 +8,32 @@ export const Navbar = () => {
         <AppBar>
             <Toolbar>
                 <NextLink href='/' passHref>
-                    <Link display='flex' alignItems='center'>
-                        <Typography variant='h6'>Shop</Typography>
-                        <Typography sx={{ ml: 0.5 }}></Typography>
-                    </Link>
+
+                    <Typography variant='h6'>Shop</Typography>
+                    <Typography sx={{ ml: 0.5 }}></Typography>
+
                 </NextLink>
                 <Box flex={1} />
 
-                <NextLink href='/category/men' passHref>
-                    <Link>
-                        <Button>Men</Button>
-                    </Link>
-                </NextLink>
-                <NextLink href='/category/women' passHref>
-                    <Link>
-                        <Button>Women</Button>
-                    </Link>
-                </NextLink>
-                <NextLink href='/category/kid' passHref>
-                    <Link>
-                        <Button>Kid</Button>
-                    </Link>
-                </NextLink>
+                <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                    <NextLink href='/category/men' passHref >
+                        <Button sx={{ marginRight: 1 }}>
+                            Men
+                        </Button >
+                    </NextLink>
+                    <NextLink href='/category/women' passHref >
+                        <Button sx={{ marginRight: 1 }}>
+                            Wom
+                        </Button >
+                    </NextLink>
+                    <NextLink href='/category/kid' passHref>
+                        <Button  >
+                            Kid
+                        </Button >
+                    </NextLink>
+
+                </Box>
+
 
                 <Box flex={1} />
 
@@ -38,14 +42,16 @@ export const Navbar = () => {
                 </IconButton>
 
                 <NextLink href='/cart' passHref>
-                    <Link>
-                        <IconButton>
-                            <Badge badgeContent={2} color='secondary'>
-                                <ShoppingCartOutlined />
-                            </Badge>
-                        </IconButton>
-                    </Link>
+                    <IconButton>
+                        <Badge badgeContent={2} color='secondary'>
+                            <ShoppingCartOutlined />
+                        </Badge>
+                    </IconButton>
                 </NextLink>
+
+                <Button  >
+                    Menu
+                </Button >
             </Toolbar>
         </AppBar>
     )
