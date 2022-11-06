@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 import { Slide } from 'react-slideshow-image';
 
+import 'react-slideshow-image/dist/styles.css'
 import style from "./ProductsSlideshow.module.css"
 
 interface Props {
@@ -19,7 +20,7 @@ export const ProductsSlideshow: FC<Props> = ({ images }) => {
                     return (
                         <div className={style["each-slide"]} key={image}>
                             <div style={{
-                                backgroundImage: `url (${url})`,
+                                backgroundImage: `url(${url})`,
                                 backgroundSize: 'cover'
                             }}>
 

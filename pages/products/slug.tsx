@@ -1,6 +1,8 @@
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
-import { FC } from 'react';
+// import { FC } from 'react';
 import ShopLayout from '../../components/layouts/ShopLayout';
+import { ProductsSlideshow, SizeSelector } from '../../components/products';
+import { ItemCounter } from '../../components/ui';
 import { initialData } from '../../database/products';
 // import { IProducts } from '../../interfaces';
 
@@ -16,7 +18,7 @@ const ProductoPage = () => {
         <ShopLayout title={product.title} pageDescription={product.description}>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={7}>
-
+                    <ProductsSlideshow images={product.images} />
                 </Grid>
                 <Grid item xs={12} sm={5}>
                     <Box display='flex' flexDirection='column'>
@@ -25,6 +27,10 @@ const ProductoPage = () => {
                     </Box>
                     <Box sx={{ my: 2 }}>
                         <Typography variant='subtitle2'>Cantidad</Typography>
+                        <ItemCounter />
+                        <SizeSelector
+                            selectedSize={product.sizes[1]}
+                            sizes={product.sizes} />
                     </Box>
                     <Button color='secondary' className='circular-btn'>Agregar al carrito</Button>
                     <Chip label="No hay disponibles" color="error" variant='outlined' />
