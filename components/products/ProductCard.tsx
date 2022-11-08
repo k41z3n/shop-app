@@ -2,12 +2,12 @@
 import NextLink from 'next/link'
 import React, { FC, useMemo, useState } from 'react'
 import { Box, Card, CardActionArea, CardMedia, Grid, Typography } from '@mui/material'
-import { IProducts } from '../../interfaces'
+import { IProduct } from '../../interfaces'
 
 
 
 interface Props {
-    product: IProducts
+    product: IProduct
 }
 
 export const ProductCard: FC<Props> = ({ product }) => {

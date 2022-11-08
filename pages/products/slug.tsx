@@ -4,10 +4,10 @@ import ShopLayout from '../../components/layouts/ShopLayout';
 import { ProductsSlideshow, SizeSelector } from '../../components/products';
 import { ItemCounter } from '../../components/ui';
 import { initialData } from '../../database/products';
-// import { IProducts } from '../../interfaces';
+// import { IProduct } from '../../interfaces';
 
 // interface Props {
-//     product: IProducts
+//     product: IProduct
 // }
 
 const product = initialData.products[0]

@@ -1,20 +1,20 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db } from '../../../database'
 import { Product } from '../../../models'
-import { IProducts } from '../../../interfaces/products';
+import { IProduct } from '../../../interfaces/products';
 
 
 
 type Data =
     | { message: string }
-    | IProducts[]
-    | IProducts
+    | IProduct[]
+    | IProduct
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
     switch (req.method) {
         case 'GET':
-            return getProducts(res)
+            return getProducts(req, res)
 
         // case 'POST':
         //     return postProducts(req, res)
@@ -38,18 +38,20 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         'all': { gender: 'all' },
     }
 
-    let params = keyParams[gender as keyof typeof keyParams] || keyParams['all'];
+    const params = keyParams[gender as keyof typeof keyParams] || keyParams['all'];
+
+    console.log(params)
 
     await db.connect()
 
-    const entries = await Product.find(params)
+    const products = await Product.find({params})
         .select('title images price inStock slug -_id')
         .lean()
         .sort({ createAt: 'ascending' })
 
     await db.disconnect()
 
-    res.status(200).json(entries)
+    res.status(200).json(products)
 
 }
 
