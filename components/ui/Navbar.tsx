@@ -23,7 +23,7 @@ export const Navbar = () => {
                     </NextLink>
                     <NextLink href='/category/women' passHref >
                         <Button sx={{ marginRight: 1 }}>
-                            Wom
+                            women
                         </Button >
                     </NextLink>
                     <NextLink href='/category/kid' passHref>

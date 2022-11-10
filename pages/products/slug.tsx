@@ -1,6 +1,6 @@
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 // import { FC } from 'react';
-import ShopLayout from '../../components/layouts/ShopLayout';
+import { ShopLayout } from '../../components/layouts';
 import { ProductsSlideshow, SizeSelector } from '../../components/products';
 import { ItemCounter } from '../../components/ui';
 import { initialData } from '../../database/products';

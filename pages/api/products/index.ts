@@ -29,10 +29,12 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     const { gender = 'all' } = req.query
 
+    console.log(gender)
+
     const keyParams = {
         'kid': { gender: 'kid' },
         'men': { gender: 'men' },
-        'woman': { gender: 'woman' },
+        'women': { gender: 'women' },
         'unisex': { gender: 'unisex' },
         //! default
         'all': { gender: 'all' },
@@ -44,10 +46,12 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     await db.connect()
 
-    const products = await Product.find({params})
+    const products = await Product.find( params)
         .select('title images price inStock slug -_id')
         .lean()
         .sort({ createAt: 'ascending' })
+    
+    console.log(products.length)
 
     await db.disconnect()
 

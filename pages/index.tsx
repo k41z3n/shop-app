@@ -1,19 +1,27 @@
 import { Typography } from "@mui/material"
 import { NextPage } from "next"
-import ShopLayout from "../components/layouts/ShopLayout"
-import { initialData } from "../database/products"
 
 import { ProductList } from "../components/products"
+import { useProducts } from '../hooks';
+
+import { ShopLayout } from "../components/layouts"
+import { FullScreenLoading } from "../components/ui";
 
 const Home: NextPage = () => {
+
+  const { products, isLoading } = useProducts('/products')
+
   return (
     <ShopLayout title="home" pageDescription="home page">
 
       <Typography variant="h1" component='h1'>Tienda</Typography>
       <Typography variant="h2" sx={{ mb: 1 }} component='h2'>Todos los productos</Typography>
 
-      <ProductList products={initialData.products as any} />
-
+      {
+        isLoading
+          ? <FullScreenLoading />
+          : <ProductList products={products} />
+      }
     </ShopLayout>
   )
 }
