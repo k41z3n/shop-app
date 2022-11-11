@@ -36,11 +36,9 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         'men': { gender: 'men' },
         'women': { gender: 'women' },
         'unisex': { gender: 'unisex' },
-        //! default
-        'all': { gender: 'all' },
     }
 
-    const params = keyParams[gender as keyof typeof keyParams] || keyParams['all'];
+    const params = keyParams[gender as keyof typeof keyParams] || null
 
     console.log(params)
 

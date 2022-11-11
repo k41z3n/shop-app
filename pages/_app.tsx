@@ -5,6 +5,7 @@ import { ThemeProvider, CssBaseline } from '@mui/material'
 import { SWRConfig } from 'swr'
 
 import { lightTheme } from '../themes'
+import { UiProvider } from '../context'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -12,10 +13,12 @@ export default function App({ Component, pageProps }: AppProps) {
       // refreshInterval: 3000,
       fetcher: (resource, init) => fetch(resource, init).then(res => res.json())
     }}>
-      <ThemeProvider theme={lightTheme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <UiProvider isMenuOpen={false}>
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </UiProvider>
     </SWRConfig>
   )
 }

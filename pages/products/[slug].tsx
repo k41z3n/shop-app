@@ -1,19 +1,20 @@
+import { NextPage, GetServerSideProps } from "next";
+
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
-// import { FC } from 'react';
-import { ShopLayout } from '../../components/layouts';
 import { ProductsSlideshow, SizeSelector } from '../../components/products';
+import { ShopLayout } from '../../components/layouts';
+
 import { ItemCounter } from '../../components/ui';
-import { initialData } from '../../database/products';
-// import { IProduct } from '../../interfaces';
+import { IProduct } from '../../interfaces';
+import { dbProducts } from "../../database";
 
-// interface Props {
-//     product: IProduct
-// }
+interface Props {
+    product: IProduct
+}
 
-const product = initialData.products[0]
 
-// const ProductoPage: FC<Props> = ({ product }) => {
-const ProductoPage = () => {
+const ProductoPage: NextPage<Props> = ({ product }) => {
+
     return (
         <ShopLayout title={product.title} pageDescription={product.description}>
             <Grid container spacing={3}>
@@ -45,5 +46,32 @@ const ProductoPage = () => {
         </ShopLayout>
     )
 }
+
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+
+    const { slug } = params as { slug: string }
+
+    const product = await dbProducts.getProductBySlug(slug); // your fetch function here
+
+
+    if (!product) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+
+    return {
+        props: {
+            product
+        },
+    };
+};
 
 export default ProductoPage
