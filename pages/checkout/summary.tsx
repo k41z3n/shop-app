@@ -2,7 +2,7 @@ import NextLink from 'next/link';
 
 import { Link, Box, Button, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
 
-import ShopLayout from '../../components/layouts/ShopLayout';
+import { ShopLayout } from '../../components/layouts';
 import { CartList, OrderSummary } from '../../components/cart';
 
 

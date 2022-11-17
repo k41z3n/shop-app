@@ -43,7 +43,7 @@ const getProductBySlug = async (req: NextApiRequest, res: NextApiResponse<Data>)
 
     } catch (error) {
         await db.disconnect()
-        console.log(error)
+        console.log('error@disconnect',error)
         return res.status(400).json({ message: "error product: "  })
     }
 

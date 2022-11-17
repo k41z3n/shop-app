@@ -29,7 +29,7 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     const { gender = 'all' } = req.query
 
-    console.log(gender)
+    // console.log(gender)
 
     const keyParams = {
         'kid': { gender: 'kid' },
@@ -40,7 +40,7 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     const params = keyParams[gender as keyof typeof keyParams] || null
 
-    console.log(params)
+    // console.log(params)
 
     await db.connect()
 
@@ -49,7 +49,7 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         .lean()
         .sort({ createAt: 'ascending' })
     
-    console.log(products.length)
+    // console.log(products.length)
 
     await db.disconnect()
 

@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 import { Link, Box, Card, CardContent, Divider, Grid, Typography, Chip } from '@mui/material';
 import { CreditCardOffOutlined, CreditScoreOutlined } from '@mui/icons-material';
 
-import ShopLayout from '../../components/layouts/ShopLayout';
+import { ShopLayout } from '../../components/layouts';
 import { CartList, OrderSummary } from '../../components/cart';
 
 

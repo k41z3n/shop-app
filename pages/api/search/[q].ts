@@ -48,7 +48,7 @@ const searchProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) =
         return res.status(200).json(products)
 
     } catch (error) {
-        console.log(error)
+        console.log('error@searchProducts',error)
         await db.disconnect()
         return res.status(400).json({ message: "error search "  })
     }

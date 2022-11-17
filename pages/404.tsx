@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
-import ShopLayout from '../components/layouts/ShopLayout'
+import { ShopLayout } from '../components/layouts'
 
 const PageNotFound = () => {
     return (
