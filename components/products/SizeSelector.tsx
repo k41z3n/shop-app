@@ -3,11 +3,13 @@ import { FC } from "react"
 import { ISize } from "../../interfaces";
 
 interface Props {
-    selectedSize: ISize;
+    selectedSize?: ISize;
     sizes: ISize[]
+    //methods
+    onChangeSize: (size: ISize) => void
 }
 
-export const SizeSelector: FC<Props> = ({ selectedSize, sizes }) => {
+export const SizeSelector: FC<Props> = ({ selectedSize, sizes, onChangeSize }) => {
     return (
         <Box>
             {
@@ -16,6 +18,7 @@ export const SizeSelector: FC<Props> = ({ selectedSize, sizes }) => {
                         key={size}
                         size='small'
                         color={selectedSize == size ? 'primary' : 'info'}
+                        onClick={() => onChangeSize(size)}
                     >
                         {size}
                     </Button>
