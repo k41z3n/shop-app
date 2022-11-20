@@ -45,14 +45,11 @@ const ProductoPage: NextPage<Props> = ({ product }) => {
     const { updateCart } = useContext(CartContext)
 
     const addProduct = () => {
-        console.log(tempCardProduct);
 
         if (!tempCardProduct.size) return
 
         updateCart(tempCardProduct)
-
-
-        // router.push('/cart')
+        router.push('/cart')
 
     }
 
@@ -87,7 +84,7 @@ const ProductoPage: NextPage<Props> = ({ product }) => {
                             ?
                             (
                                 <Button
-                                    color='secondary'
+                                    color={tempCardProduct.size ? 'secondary' : 'error'}
                                     className='circular-btn'
                                     fullWidth
                                     onClick={() => addProduct()}

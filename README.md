@@ -16,6 +16,9 @@ mongodb://localhost:27017/shopdb
 
 copy .env.template  and rename .env
 
+NEXT_PUBLIC_TAX_RATE=number
+
 ## seed default data - api request
 
 http://localhost:3000/api/seed
+

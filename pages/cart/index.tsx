@@ -7,12 +7,14 @@ const CartPage = () => {
     return (
         <ShopLayout title="Shopping Cart" pageDescription="cart shopping">
             <Typography variant="h1" component='h1'>Cart</Typography>
-            <Grid container>
+            <Grid container >
+
                 <Grid item xs={12} sm={7}>
                     <CartList editable />
                 </Grid>
-                <Grid item xs={12} sm={5}>
-                    <Card className="summary-card">
+
+                <Grid item xs={12} sm={5} >
+                    <Card className="summary-card"  >
                         <Typography variant="h2">Orden</Typography>
                         <Divider sx={{ my: 1 }} />
                         <OrderSummary />
