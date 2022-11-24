@@ -3,4 +3,4 @@ export * as dbProducts from './dbProducts'
 
 
 // DB-SAMPLE
-export * as seedDB from './products'
+export * as seedDB from './seed-data'
