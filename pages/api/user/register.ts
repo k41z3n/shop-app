@@ -72,7 +72,7 @@ const registerUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => 
 
     const token = jwt.singToken(id, email)
     
-    return  res.status(400).json({
+    return  res.status(200).json({
         token,
         user:{email,role,name}
     })

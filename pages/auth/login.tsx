@@ -1,47 +1,44 @@
-import { useContext, useState } from "react";
-import NextLink from "next/link";
+import { useState, useContext } from 'react';
+
+import NextLink from "next/link"
 import { useForm } from "react-hook-form";
 
-import { validations } from "../../utils";
-// import { shopApi } from "../../api";
-
+import { Box, Grid, Typography, TextField, Button, Link, Chip } from "@mui/material"
 import { AuthLayout } from "../../components/layouts"
-import { Box, Button, Chip, Grid, TextField, Typography } from "@mui/material";
-import { ErrorOutline } from "@mui/icons-material";
-import { AuthContext } from "../../context";
-import { useRouter } from "next/router";
+import { validations } from "../../utils";
+// import { shopApi } from '../../api';
 
+import { ErrorOutline } from "@mui/icons-material";
+import { AuthContext } from '../../context';
+import { useRouter } from 'next/router';
 
 type FormData = {
-    name: string,
     email: string,
     password: string,
 };
 
 
-const RegisterPage = () => {
-    const { registernUser } = useContext(AuthContext)
+const LoginPage = () => {
 
     const router = useRouter()
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
     const [hasError, sethasError] = useState(false)
-    const [errorMessage, setErrorMessage] = useState('')
 
-    const registerUser = async ({ name, email, password }: FormData) => {
+    const { loginUser } = useContext(AuthContext)
+
+    const onLogin = async ({ email, password }: FormData) => {
         sethasError(false)
-        const { hasError, message } = await registernUser(name, email, password)
-        if (hasError) {
+        const isValid = await loginUser(email, password)
+        if (!isValid) {
             sethasError(true)
-            setErrorMessage(message!)
             return
         }
 
         router.replace('/')
-
         // try {
-        //     const { data } = await shopApi.post("/user/register", { name, email, password })
+        //     const { data } = await shopApi.post('/user/login', { email, password })
         //     const { token, user } = data
         //     console.log(token, user);
 
@@ -51,38 +48,25 @@ const RegisterPage = () => {
         // }
     }
 
-
     return (
-        <AuthLayout title={"Ingresar"}>
-            <Box sx={{ width: 350, padding: "10px 20px" }}>
-                <form onSubmit={handleSubmit(registerUser)} noValidate >
+        <AuthLayout title={'Ingresar'}>
+            <form onSubmit={handleSubmit(onLogin)} noValidate>
+                <Box sx={{ width: 350, padding: '10px 20px' }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Typography variant="h1" component="h1">Crear cuenta</Typography>
+                            <Typography variant='h1' component="h1"> Iniciar Sesión </Typography>
 
                             <Chip
                                 sx={{ width: '100%', display: hasError ? 'flex' : 'none' }}
-                                label={errorMessage ? errorMessage : 'Email already register!!!'}
+                                label='User or password invalid!!!'
                                 color="error"
                                 className="fadeIn"
                                 icon={<ErrorOutline />}
                             />
                         </Grid>
-
                         <Grid item xs={12}>
                             <TextField
-                                label="Nombre completo"
-                                variant="filled"
-                                fullWidth
-                                {...register("name", {
-                                    required: 'name is required'
-                                })}
-                                error={!!errors.name}
-                                helperText={errors.name?.message}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
+                                type='email'
                                 label="Correo"
                                 variant="filled"
                                 fullWidth
@@ -97,7 +81,7 @@ const RegisterPage = () => {
                         <Grid item xs={12}>
                             <TextField
                                 label="Contraseña"
-                                type="password"
+                                type='password'
                                 variant="filled"
                                 fullWidth
                                 {...register("password", {
@@ -111,26 +95,25 @@ const RegisterPage = () => {
 
                         <Grid item xs={12}>
                             <Button
+                                type='submit'
                                 color="secondary"
-                                className="circular-btn"
-                                size="large"
-                                fullWidth
-                                type="submit"
-                            >
+                                className='circular-btn'
+                                size='large'
+                                fullWidth>
                                 Ingresar
                             </Button>
                         </Grid>
 
-                        <Grid item xs={12} display="flex" justifyContent="end">
-                            <NextLink href="/auth/login" passHref>
-                                ¿Ya tienes cuenta?
+                        <Grid item xs={12} display='flex' justifyContent='end'>
+                            <NextLink href="/auth/register" passHref>
+                                ¿No tienes cuenta?
                             </NextLink>
                         </Grid>
                     </Grid>
-                </form>
-            </Box>
+                </Box>
+            </form>
         </AuthLayout>
     )
 }
 
-export default RegisterPage
+export default LoginPage

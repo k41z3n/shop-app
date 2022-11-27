@@ -38,18 +38,18 @@ const loginUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     await db.disconnect()
 
     if (!user) {
-        return res.status(400).json({message:'email o password invalid!'})
+        return res.status(401).json({message:'email o password invalid!'})
     }
     
     if (!bcrypt.compareSync(password, user.password!)) {
-        return res.status(400).json({message:'email o password invalid!'})
+        return res.status(401).json({message:'email o password invalid!'})
     }
 
     const { id, role, name } = user
 
     const token = jwt.singToken(id, email)
     
-    return  res.status(400).json({
+    return  res.status(200).json({
         token,
         user:{email,role,name}
     })
