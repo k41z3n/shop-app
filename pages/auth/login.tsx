@@ -36,7 +36,8 @@ const LoginPage = () => {
             return
         }
 
-        router.replace('/')
+        const redirectTo = router.query.p?.toString() || '/'
+        router.replace(redirectTo)
         // try {
         //     const { data } = await shopApi.post('/user/login', { email, password })
         //     const { token, user } = data
@@ -47,6 +48,8 @@ const LoginPage = () => {
         //     console.log({ error })
         // }
     }
+
+
 
     return (
         <AuthLayout title={'Ingresar'}>
@@ -104,8 +107,15 @@ const LoginPage = () => {
                             </Button>
                         </Grid>
 
-                        <Grid item xs={12} display='flex' justifyContent='end'>
-                            <NextLink href="/auth/register" passHref>
+                        <Grid
+                            item
+                            xs={12}
+                            display='flex'
+                            justifyContent='end'
+                        >
+                            <NextLink
+                                href={router.query.p ? `/auth/register?p=${router.query.p}` : '/auth/register'}
+                                passHref>
                                 ¿No tienes cuenta?
                             </NextLink>
                         </Grid>

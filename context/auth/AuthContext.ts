@@ -7,6 +7,7 @@ interface contextProps {
     //methos
     loginUser:(email: string, password: string)=> Promise<boolean> 
     registernUser:(name:string, email: string, password: string)=> Promise<{ hasError: boolean; message?: string; }> 
+    logoutUser:()=> void
 }
 
 export const AuthContext = createContext({} as contextProps);

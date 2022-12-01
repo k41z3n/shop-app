@@ -38,7 +38,8 @@ const RegisterPage = () => {
             return
         }
 
-        router.replace('/')
+        const redirectTo = router.query.p?.toString() || '/'
+        router.replace(redirectTo)
 
         // try {
         //     const { data } = await shopApi.post("/user/register", { name, email, password })
@@ -122,7 +123,9 @@ const RegisterPage = () => {
                         </Grid>
 
                         <Grid item xs={12} display="flex" justifyContent="end">
-                            <NextLink href="/auth/login" passHref>
+                            <NextLink
+                                href={router.query.p ? `/auth/login?p=${router.query.p}` : '/auth/login'}
+                                passHref>
                                 ¿Ya tienes cuenta?
                             </NextLink>
                         </Grid>

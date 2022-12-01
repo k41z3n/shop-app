@@ -1,4 +1,5 @@
 import { FC, useReducer, PropsWithChildren, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -22,6 +23,27 @@ const AUTH_INITIAL_STATE = {
 export const AuthProvider: FC<PropsWithChildren<AuthState>> = ({ children }) => {
 
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
+    const router = useRouter()
+
+    useEffect(() => {
+        checkToken()
+    }, [])
+
+
+    const checkToken = async () => {
+
+        if (!Cookies.get('toket')) return
+
+        try {
+            const { data } = await shopApi.get('/user/validate-token')
+            const { token, user } = data
+            Cookies.set('token', token)
+            dispatch({ type: 'Auth - Login', payload: user })
+
+        } catch (error) {
+            Cookies.remove('token')
+        }
+    }
 
     const loginUser = async (email: string, password: string): Promise<boolean> => {
         try {
@@ -36,6 +58,15 @@ export const AuthProvider: FC<PropsWithChildren<AuthState>> = ({ children }) => 
             return false
         }
     }
+
+    const logoutUser = () => {
+        // dispatch({ type: 'Auth - Logout' })
+        Cookies.remove('token')
+        Cookies.remove('cart')
+        router.reload()
+    }
+
+
     const registernUser = async (name: string, email: string, password: string): Promise<{ hasError: boolean; message?: string; }> => {
         try {
 
@@ -68,7 +99,8 @@ export const AuthProvider: FC<PropsWithChildren<AuthState>> = ({ children }) => 
             ...state,
             //Methods
             loginUser,
-            registernUser
+            registernUser,
+            logoutUser
         }}>
             {children}
         </AuthContext.Provider>

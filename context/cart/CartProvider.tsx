@@ -6,15 +6,17 @@ import { ICartProduct } from '../../interfaces';
 import { CartContext, cartReducer } from '.';
 
 export interface CartState {
+    hasProducts: boolean;
     cart: ICartProduct[];
-    numberOfItems: number
-    subTotal: number
-    tax: number
-    total: number
+    numberOfItems: number;
+    subTotal: number;
+    tax: number;
+    total: number;
 }
 
 
 const CART_INITIAL_STATE = {
+    hasProducts: false,
     cart: [],
     numberOfItems: 0,
     subTotal: 0,
