@@ -1,8 +1,9 @@
-import { Typography } from "@mui/material"
 import { NextPage } from "next"
 
 import { ProductList } from "../components/products"
 import { useProducts } from '../hooks';
+
+import { Typography } from "@mui/material"
 
 import { ShopLayout } from "../components/layouts"
 import { FullScreenLoading } from "../components/ui";
@@ -10,6 +11,7 @@ import { FullScreenLoading } from "../components/ui";
 const Home: NextPage = () => {
 
   const { products, isLoading } = useProducts('/products')
+
 
   return (
     <ShopLayout title="home" pageDescription="home page">

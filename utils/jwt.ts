@@ -18,6 +18,9 @@ export const isValidToken = (token: string): Promise<string> => {
     
     if (!process.env.SECRET_JWT)
         throw new Error("secret jws is required");
+        
+    if(token.length <= 10)
+        throw new Error("is not jwt token");
     
     return new Promise((resolve, reject) => {
         try {
@@ -29,7 +32,7 @@ export const isValidToken = (token: string): Promise<string> => {
                     
                     const { _id } = payload as {_id:string}
                     
-                    return _id
+                    resolve(_id)
                 })
         } catch (error) {
             reject(`ErrorJwtVerifyr@${error}`)           

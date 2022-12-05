@@ -1,4 +1,8 @@
 # next.js shop
+Npm version 
+```
+npm 16.15.0
+```
 run local - need database
 ```
 docker-compose up -d

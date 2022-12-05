@@ -32,7 +32,7 @@ export const CartProvider: FC<PropsWithChildren<CartState>> = ({ children }) => 
     useEffect(() => {
         try {
             const cookieCart = Cookie.get('cart') ? JSON.parse(Cookie.get('cart')!) : []
-            console.log({ cookieCart })
+
             dispatch({ type: 'Cart - loadData from cookies', payload: cookieCart })
         } catch {
             dispatch({ type: 'Cart - loadData from cookies', payload: [] })
