@@ -43,14 +43,15 @@ const searchProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) =
             .select('title images price inStock slug -_id')
             .lean()
 
-        await db.disconnect()
 
         return res.status(200).json(products)
 
     } catch (error) {
         console.log('error@searchProducts',error)
-        await db.disconnect()
         return res.status(400).json({ message: "error search "  })
+    } finally {
+        await db.disconnect()
+        
     }
 
 }

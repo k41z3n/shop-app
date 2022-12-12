@@ -61,11 +61,12 @@ const registerUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => 
     
     try {
         await newUser.save({ validateBeforeSave: true })  
-        await db.disconnect()
         
     } catch (error) {
-        await db.disconnect()
         return res.status(500).json({message:'Error server!!!'})
+    } finally {
+        await db.disconnect()
+        
     }
  
     const { id, role} = newUser

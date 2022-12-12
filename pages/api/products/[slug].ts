@@ -32,8 +32,6 @@ const getProductBySlug = async (req: NextApiRequest, res: NextApiResponse<Data>)
 
     try {
         const product = await Product.findOne({ slug }).lean()
-        
-        await db.disconnect()
 
         if (!product) {
             return res.status(200).json({ message: "product not found !!" })
@@ -42,9 +40,10 @@ const getProductBySlug = async (req: NextApiRequest, res: NextApiResponse<Data>)
         return res.status(200).json(product!)
 
     } catch (error) {
-        await db.disconnect()
         console.log('error@disconnect',error)
         return res.status(400).json({ message: "error product: "  })
+    } finally {
+        await db.disconnect()
     }
 
 }
