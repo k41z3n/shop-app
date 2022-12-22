@@ -12,6 +12,17 @@ export interface CartState {
     subTotal: number;
     tax: number;
     total: number;
+    shippingAddress?: IShippingAddress
+}
+
+export interface IShippingAddress {
+    firstName: string;
+    lastName: string;
+    direction: string;
+    direction2?: string;
+    code: string;
+    city: string;
+    phone: string;
 }
 
 
@@ -22,6 +33,7 @@ const CART_INITIAL_STATE = {
     subTotal: 0,
     tax: 0,
     total: 0,
+    shippingAddress: undefined
 };
 
 
@@ -63,6 +75,23 @@ export const CartProvider: FC<PropsWithChildren<CartState>> = ({ children }) => 
 
     }, [state.cart])
 
+    useEffect(() => {
+        if (Cookie.get('firstName')) {
+            const shippingAddress = {
+                firstName: Cookie.get('firstName') || '',
+                lastName: Cookie.get('lastName') || '',
+                direction: Cookie.get('direction') || '',
+                direction2: Cookie.get('direction2') || '',
+                code: Cookie.get('code') || '',
+                city: Cookie.get('city') || '',
+                phone: Cookie.get('phone') || '',
+            }
+
+            dispatch({ type: 'Cart - store shipping address', payload: shippingAddress })
+        }
+
+    }, [])
+
 
     const updateCart = (product: ICartProduct) => {
 
@@ -91,13 +120,26 @@ export const CartProvider: FC<PropsWithChildren<CartState>> = ({ children }) => 
         dispatch({ type: 'Cart - remove Product in Cart', payload: product })
     }
 
+    const storeShippingAddress = (address: IShippingAddress) => {
+        Cookie.set("firstName", address.firstName)
+        Cookie.set("lastName", address.lastName)
+        Cookie.set("direction", address.direction)
+        Cookie.set("direction2", address?.direction2 || '')
+        Cookie.set("code", address.code)
+        Cookie.set("city", address.city)
+        Cookie.set("phone", address.phone)
+
+        dispatch({ type: 'Cart - store shipping address', payload: address })
+    }
+
     return (
         <CartContext.Provider value={{
             ...state,
             //Methods
             updateCart,
             updateCartProduct,
-            removeCartProduct
+            removeCartProduct,
+            storeShippingAddress
         }}>
             {children}
         </CartContext.Provider>

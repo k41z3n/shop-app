@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { GetServerSideProps } from "next";
+// import { GetServerSideProps } from "next";
 import { useRouter } from 'next/router';
 
 import { CartContext } from "../../context";
@@ -8,19 +8,19 @@ import { Box, Button, Card, Divider, Grid, Typography } from "@mui/material"
 import { ShopLayout } from "../../components/layouts"
 import { CartList } from '../../components/cart';
 import { OrderSummary } from "../../components/cart";
-import { jwt } from '../../utils';
+// import { jwt } from '../../utils';
 
 const CartPage = () => {
     const { hasProducts, cart } = useContext(CartContext)
     const router = useRouter()
 
     useEffect(() => {
-        if (hasProducts && cart.length === 0) {
+        if (hasProducts && cart && cart.length === 0) {
             router.replace('/cart/empty')
         }
     }, [hasProducts, cart, router])
 
-    if (!hasProducts && cart.length === 0) return <></>
+    if (!hasProducts && cart && cart.length === 0) return <></>
 
     return (
         <ShopLayout title="Shopping Cart" pageDescription="cart shopping">

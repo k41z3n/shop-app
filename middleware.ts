@@ -4,20 +4,21 @@ import { jwtVerify } from "jose";
 export async function middleware(request:NextRequest) {
   const jwt = request.cookies.get("token")?.value;
   
-  console.log({request});
+  const requestPage = request.nextUrl.pathname
 
   if (request.nextUrl.pathname.startsWith('/checkout')) {
-    if (!jwt) return NextResponse.redirect(new URL("/auth/login", request.url));
+    if (!jwt) return NextResponse.redirect(new URL(`/auth/login?p=${requestPage}`, request.url));
   
     try {
       const { payload } = await jwtVerify(
         jwt,
         new TextEncoder().encode(process.env.SECRET_JWT || '')
       );
-      console.log({ payload });
+      
+  
       return NextResponse.next();
     } catch (error) {
-      return NextResponse.redirect(new URL("/auth/login", request.url));
+      return NextResponse.redirect(new URL(`/auth/login?p=${requestPage}`, request.url));
     }
   }
 
