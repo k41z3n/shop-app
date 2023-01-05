@@ -1,26 +1,43 @@
 import { NextResponse, NextRequest } from "next/server";
-import { jwtVerify } from "jose";
+import {getToken} from "next-auth/jwt";
 
-export async function middleware(request:NextRequest) {
-  const jwt = request.cookies.get("token")?.value;
-  
-  const requestPage = request.nextUrl.pathname
+// import { jwtVerify } from "jose";
 
-  if (request.nextUrl.pathname.startsWith('/checkout')) {
-    if (!jwt) return NextResponse.redirect(new URL(`/auth/login?p=${requestPage}`, request.url));
+
+export async function middleware(req: NextRequest) {
   
-    try {
-      const { payload } = await jwtVerify(
-        jwt,
-        new TextEncoder().encode(process.env.SECRET_JWT || '')
-      );
+  const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
+
+  const requestPage = req.nextUrl.pathname
+
+  if (!session) {
+    return NextResponse.redirect(new URL(`/auth/login?p=${requestPage}`, req.url))
+  }
+
+  return NextResponse.next()
+
+
+
+
+  // const jwt = request.cookies.get("token")?.value;
+  
+  // const requestPage = request.nextUrl.pathname
+
+  // if (request.nextUrl.pathname.startsWith('/checkout')) {
+  //   if (!jwt) return NextResponse.redirect(new URL(`/auth/login?p=${requestPage}`, request.url));
+  
+  //   try {
+  //     const { payload } = await jwtVerify(
+  //       jwt,
+  //       new TextEncoder().encode(process.env.SECRET_JWT || '')
+  //     );
       
   
-      return NextResponse.next();
-    } catch (error) {
-      return NextResponse.redirect(new URL(`/auth/login?p=${requestPage}`, request.url));
-    }
-  }
+  //     return NextResponse.next();
+  //   } catch (error) {
+  //     return NextResponse.redirect(new URL(`/auth/login?p=${requestPage}`, request.url));
+  //   }
+  // }
 
 }
 

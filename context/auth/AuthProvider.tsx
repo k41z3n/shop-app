@@ -1,5 +1,6 @@
 import { FC, useReducer, PropsWithChildren, useEffect } from 'react';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
+import { useSession, signOut } from 'next-auth/react';
 
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -23,27 +24,38 @@ const AUTH_INITIAL_STATE = {
 export const AuthProvider: FC<PropsWithChildren<AuthState>> = ({ children }) => {
 
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
-    const router = useRouter()
+    const { data, status } = useSession()
+    // const router = useRouter()
+
 
     useEffect(() => {
-        checkToken()
-    }, [])
+
+        // console.log(data, status);
+        if (status === 'authenticated')
+            dispatch({ type: 'Auth - Login', payload: data.user as IUser })
+
+    }, [status, data])
 
 
-    const checkToken = async () => {
+    // useEffect(() => {
+    //     checkToken()
+    // }, [])
 
-        if (!Cookies.get('toket')) return
 
-        try {
-            const { data } = await shopApi.get('/user/validate-token')
-            const { token, user } = data
-            Cookies.set('token', token)
-            dispatch({ type: 'Auth - Login', payload: user })
+    // const checkToken = async () => {
 
-        } catch (error) {
-            Cookies.remove('token')
-        }
-    }
+    //     if (!Cookies.get('toket')) return
+
+    //     try {
+    //         const { data } = await shopApi.get('/user/validate-token')
+    //         const { token, user } = data
+    //         Cookies.set('token', token)
+    //         dispatch({ type: 'Auth - Login', payload: user })
+
+    //     } catch (error) {
+    //         Cookies.remove('token')
+    //     }
+    // }
 
     const loginUser = async (email: string, password: string): Promise<boolean> => {
         try {
@@ -61,9 +73,17 @@ export const AuthProvider: FC<PropsWithChildren<AuthState>> = ({ children }) => 
 
     const logoutUser = () => {
         // dispatch({ type: 'Auth - Logout' })
-        Cookies.remove('token')
+        // Cookies.remove('token')
         Cookies.remove('cart')
-        router.reload()
+        Cookies.remove("firstName")
+        Cookies.remove("lastName")
+        Cookies.remove("direction")
+        Cookies.remove("direction2")
+        Cookies.remove("code")
+        Cookies.remove("city")
+        Cookies.remove("phone")
+        // router.reload()
+        signOut()
     }
 
 

@@ -1,4 +1,7 @@
 import { useContext, useState } from "react";
+import { GetServerSideProps } from "next";
+import { getSession, signIn } from "next-auth/react";
+
 import NextLink from "next/link";
 import { useForm } from "react-hook-form";
 
@@ -38,8 +41,9 @@ const RegisterPage = () => {
             return
         }
 
-        const redirectTo = router.query.p?.toString() || '/'
-        router.replace(redirectTo)
+        // const redirectTo = router.query.p?.toString() || '/'
+        // router.replace(redirectTo)
+        await signIn('credentials', { email, password })
 
         // try {
         //     const { data } = await shopApi.post("/user/register", { name, email, password })
@@ -135,5 +139,29 @@ const RegisterPage = () => {
         </AuthLayout>
     )
 }
+
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+
+    const session = await getSession({ req })
+
+    const { p = '/' } = query
+
+    if (session) {
+        return {
+            redirect: {
+                destination: p.toString(),
+                permanent: false
+            },
+        }
+    }
+
+    return {
+        props: {},
+    };
+};
 
 export default RegisterPage

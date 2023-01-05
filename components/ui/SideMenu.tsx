@@ -63,14 +63,14 @@ export const SideMenu = () => {
                     {
                         isLoggedIn && (
                             <>
-                                <ListItem button>
+                                <ListItem >
                                     <ListItemIcon>
                                         <AccountCircleOutlined />
                                     </ListItemIcon>
                                     <ListItemText primary={'Perfil'} />
                                 </ListItem>
 
-                                <ListItem button>
+                                <ListItem button onClick={() => navigateTo('/orders/history')}>
                                     <ListItemIcon>
                                         <ConfirmationNumberOutlined />
                                     </ListItemIcon>
@@ -140,20 +140,20 @@ export const SideMenu = () => {
                                 <Divider />
                                 <ListSubheader>Admin Panel</ListSubheader>
 
-                                <ListItem button>
+                                <ListItem >
                                     <ListItemIcon>
                                         <CategoryOutlined />
                                     </ListItemIcon>
                                     <ListItemText primary={'Productos'} />
                                 </ListItem>
-                                <ListItem button>
+                                <ListItem >
                                     <ListItemIcon>
                                         <ConfirmationNumberOutlined />
                                     </ListItemIcon>
                                     <ListItemText primary={'Ordenes'} />
                                 </ListItem>
 
-                                <ListItem button>
+                                <ListItem >
                                     <ListItemIcon>
                                         <AdminPanelSettings />
                                     </ListItemIcon>
